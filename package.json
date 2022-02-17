@@ -1,0 +1,26 @@
+{
+  "name": "aws-test-api",
+  "version": "1.0.0",
+  "description": "<!-- title: 'AWS Simple HTTP Endpoint example in NodeJS' description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.' layout: Doc framework: v3 platform: AWS language: nodeJS authorLink: 'https://github.com/serverless' authorName: 'Serverless, inc.' authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4' -->",
+  "main": "handler.js",
+  "scripts": {
+    "dev": "sls offline start -s dev",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@shelf/jest-dynamodb": "^2.2.3",
+    "ajv": "^8.10.0",
+    "aws-sdk": "^2.1075.0",
+    "node-fetch": "^2.6.7",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-offline": "^8.4.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "serverless-openapi-documentation": "^0.4.0"
+  }
+}

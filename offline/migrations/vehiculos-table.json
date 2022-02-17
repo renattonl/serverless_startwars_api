@@ -1,0 +1,19 @@
+{
+  "Table": {
+    "TableName": "vehiculosTable",
+    "KeySchema": {
+      "AttributeName": "ID",
+      "KeyType": "HASH"
+    },
+    "AttributeDefiunitions": [
+      {
+        "AttributeName": "ID",
+        "AttributeType": "S"
+      }
+    ],
+    "PrivisionedThougput": {
+      "ReadCapacityUnits": 1,
+      "WriteCapacityUnits": 1
+    }
+  }
+}

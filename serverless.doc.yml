@@ -1,0 +1,8 @@
+version: '1.0.0',
+title: 'Api reto técnico - Indra'
+description: 'Esta api se ha desarrollado para obtener un modelo de vehiculo y para guardar un modelo vehiculo'
+models: 
+  - name: "Vehiculo"
+    description: "El modelo Vehiculo"
+    contentType: "application/json"
+    schema: 
