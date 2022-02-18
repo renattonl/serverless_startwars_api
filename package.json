@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "jest": "^27.5.1",
+    "serverless-dotenv-plugin": "^3.12.2",
     "serverless-openapi-documentation": "^0.4.0"
   }
 }
