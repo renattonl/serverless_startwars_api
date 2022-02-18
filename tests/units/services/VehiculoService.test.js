@@ -23,8 +23,6 @@ describe("VehiculoService.js", () => {
     ],
     "url": "https://swapi.py4e.com/api/vehicles/4/",
     "clase_de_vehiculo": "wheeled",
-    // "creado": new Date().toISOString(),
-    // "editado": new Date().toISOString(),
   };
 
   test("debe tener el tipado y sus respectivos metodos", () => {
