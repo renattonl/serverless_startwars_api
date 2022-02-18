@@ -1,30 +1,24 @@
-<!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
-
 # Serverless Framework Node HTTP API on AWS
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+Este es un proyecto que tiene como finalidad crear una API con el framework Serverless usando Node.js; desplegando el proyecto en los servicios de AWS.
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+Se ha creado 2 recursos GET, para poder obtener el registro y POST para 
+crear el registro. Se ha utilizado la api de [Swapi - The Star Wars API](https://swapi.dev/). Se ha utilizado como modelo al recurso [vehicle](https://swapi.dev/documentation#vehicles) de la API.
 
-## Usage
+## Uso
 
-### Deployment
-
+### Despliegue
+```
+$ npm install -g serverless
+```
+```
+$ serverless config credentials --provider aws --key MY_KEY --secret MY_SECRET
+```
 ```
 $ serverless deploy
 ```
 
-After deploying, you should see output similar to:
+Despues de desplegar el proyecto, la salida de consola sera algo como esto:
 
 ```bash
 Deploying aws-node-http-api-project to stage dev (us-east-1)
@@ -36,60 +30,49 @@ functions:
   hello: aws-node-http-api-project-dev-hello (1.9 kB)
 ```
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [http event docs](https://www.serverless.com/framework/docs/providers/aws/events/apigateway/).
+### Invocación
 
-### Invocation
-
-After successful deployment, you can call the created application via HTTP:
+Después de una implementación exitosa, puede llamar a las URL con su respectivo Verbo.
 
 ```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
+GET https://xxxxxxx.execute-api.us-east-1.amazonaws.com/vehiculo/4
+POST https://xxxxxxx.execute-api.us-east-1.amazonaws.com/vehiculo
 ```
 
-Which should result in response similar to the following (removed `input` content for brevity):
+### Entorno local
 
-```json
+Es importante tener instaldo [Java JRE](https://www.java.com/en/download/manual.jsp), ya que se esta usando el plugin `serverless-dynamodb-local`. Puede invocar las funciones localmente usando con los siguientes comandos:
+
+Para poder llamar la función `crearVehiculo` y su respectiva respuesta:
+
+```bash
+serverless invoke local --function crearVehiculo
+```
+```
 {
-  "message": "Go Serverless v2.0! Your function executed successfully!",
-  "input": {
-    ...
-  }
+    "statusCode": 400,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "message": "must have required property 'capacidad_cargo'"
+    }
 }
 ```
 
-### Local development
-
-You can invoke your function locally by using the following command:
+Para poder llamar la función `obtenerVehiculo` y su respectiva respuesta:
 
 ```bash
-serverless invoke local --function hello
+serverless invoke local --function obtenerVehiculo
 ```
-
-Which should result in response similar to the following:
-
 ```
 {
-  "statusCode": 200,
-  "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
+    "statusCode": 400,
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "message": "must have required property 'capacidad_cargo'"
+    }
 }
 ```
-
-
-Alternatively, it is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
-
-```bash
-serverless plugin install -n serverless-offline
-```
-
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
-
-After installation, you can start local emulation with:
-
-```
-serverless offline
-```
-
-To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
-
-
-serverless config credentials --provider aws --key MY_KEY --secret MY_SECRET
