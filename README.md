@@ -8,16 +8,11 @@ crear el registro. Se ha utilizado la api de [Swapi - The Star Wars API](https:/
 ## Uso
 
 ### Despliegue
-```
-$ cp .env.example .env
-```
-```
+```bash
 $ npm install -g serverless
-```
-```
+$ npm install
+$ cp .env.example .env
 $ serverless config credentials --provider aws --key MY_KEY --secret MY_SECRET
-```
-```
 $ serverless deploy
 ```
 
@@ -44,14 +39,19 @@ POST https://xxxxxxx.execute-api.us-east-1.amazonaws.com/vehiculo
 
 ### Entorno local
 
-Es importante tener instaldo [Java JRE](https://www.java.com/en/download/manual.jsp), ya que se esta usando el plugin `serverless-dynamodb-local`. Puede invocar las funciones localmente usando con los siguientes comandos:
+Es importante tener instaldo [Java JRE](https://www.java.com/en/download/manual.jsp), ya que se esta usando el plugin `serverless-dynamodb-local`. 
 
+```bash
+$ sls dynamodb install
+$ sls dynamodb start --migrate
+$ npm run dev
+```
 Para poder llamar la función `crearVehiculo` y su respectiva respuesta:
 
 ```bash
 serverless invoke local --function crearVehiculo
 ```
-```
+```json
 {
     "statusCode": 400,
     "headers": {
@@ -68,7 +68,7 @@ Para poder llamar la función `obtenerVehiculo` y su respectiva respuesta:
 ```bash
 serverless invoke local --function obtenerVehiculo
 ```
-```
+```json
 {
     "statusCode": 400,
     "headers": {

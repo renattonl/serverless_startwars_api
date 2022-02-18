@@ -4,15 +4,15 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs14.x
-  region: ${env:AWS_REGION}
-  stage: ${env:STAGE}
-  profile: ${env:AWS_PROFILE}
+  stage: ${env:STAGE, 'dev'}
+  region: ${env:AWS_REGION, 'us-east-1'}
+  profile: ${env:AWS_PROFILE, 'default'}
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-offline
   - serverless-dynamodb-local
   - serverless-openapi-documentation
-  - serverless-dotenv-plugin
 
 functions:
   crearVehiculo:
