@@ -9,6 +9,9 @@ crear el registro. Se ha utilizado la api de [Swapi - The Star Wars API](https:/
 
 ### Despliegue
 ```
+$ cp .env.example .env
+```
+```
 $ npm install -g serverless
 ```
 ```
