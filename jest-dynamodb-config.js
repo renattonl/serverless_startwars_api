@@ -1,18 +1,21 @@
 module.exports = {
   tables: [
     {
-      "TableName": "vehiculosTable",
-      "KeySchema": {
-        "AttributeName": "ID",
-        "KeyType": "HASH"
+      TableName: "vehiculosTable",
+      KeySchema: {
+        AttributeName: "ID",
+        KeyType: "HASH"
       },
-      "AttributeDefiunitions": [
+      AttributeDefinitions: [
         {
-          "AttributeName": "ID",
-          "AttributeType": "S"
-        }
+          AttributeName: "ID",
+          AttributeType: "S"
+        },
       ],
-      "BillingMode": "PAY_PER_REQUEST"
+      ProvisionedThroughput: {
+        ReadCapacityUnits: 1, 
+        WriteCapacityUnits: 1
+      }
     }
-  ]
+  ],
 }

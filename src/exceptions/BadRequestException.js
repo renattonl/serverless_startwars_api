@@ -1,5 +1,5 @@
-
-class BadRequestException extends Error{
+const BaseException = require("./BaseException");
+class BadRequestException extends BaseException{
 
   statusCode;
 

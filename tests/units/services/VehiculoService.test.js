@@ -1,11 +1,14 @@
+jest.mock('../../../src/services/VehiculoService');
 const BadRequestException = require("../../../src/exceptions/BadRequestException");
 const NotFoundException = require("../../../src/exceptions/NotFoundException");
 const Vehiculo = require("../../../src/models/Vehiculo");
 const VehiculoService = require("../../../src/services/VehiculoService");
 
+
 describe("VehiculoService.js", () => {
   const service = new VehiculoService();
   const dataTest = {
+    "ID": "1",
     "capacidad_cargo": "50000",
     "consumibles": "2 months",
     "costo_en_creditos": "150000",
@@ -33,8 +36,8 @@ describe("VehiculoService.js", () => {
   });
 
   test("el metodo crear debe devolver el modelo Vehiculo", async () => {
-    expect.assertions(1);
     try {
+      service.crear.mockResolvedValue(Promise.resolve(new Vehiculo(dataTest)));
       const row = await service.crear(dataTest);
       expect(row).toBeInstanceOf(Vehiculo);
     } catch (error) {
@@ -43,27 +46,23 @@ describe("VehiculoService.js", () => {
   });
 
   test('el metodo crear debe devolver error BadRequestException', async () => {
-    expect.assertions(1);
     try {
+      service.crear.mockResolvedValue(Promise.reject(new BadRequestException()));
       await service.crear({});
     } catch (error) {
-      expect(error).toBeInstanceOf(BadRequestException)
+      expect(error).toBeInstanceOf(BadRequestException);
     }
   });
 
   test("el metodo get debe devolver el modelo Vehiculo", async () => {
-    expect.assertions(1);
-    try {
-      const row = await service.obtener(4);
-      expect(row).toBeInstanceOf(Vehiculo);
-    } catch (error) {
-      console.log('error service', error)
-    }
+    service.obtener.mockResolvedValue(Promise.resolve(new Vehiculo(dataTest)));
+    const row = await service.obtener(dataTest.ID);
+    expect(row).toBeInstanceOf(Vehiculo);
   });
 
-  test("el metodo get debe devolver un NotFoundException", async () => {
-    expect.assertions(1);
+  test("el metodo obtener devuelve error, el ID debe ser string", async () => {
     try {
+      service.obtener.mockResolvedValue(Promise.reject(new NotFoundException()));
       await service.obtener(Date.now());
     } catch (error) {
       expect(error).toBeInstanceOf(NotFoundException);

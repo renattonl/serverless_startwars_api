@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const NotFoundException = require('../exceptions/NotFoundException');
 const BASE_URL = `https://swapi.py4e.com/api`
 
 class Swapi {
@@ -7,8 +8,8 @@ class Swapi {
     try {
       const res = await fetch(`${BASE_URL}/vehicles/${id}`);
       const data = await res.json();
-      if(res.status !== 200){
-        throw Error(data.detail);
+      if(res.status === 404){
+        throw new NotFoundException(`No existe el registro con el ID: ${id}`);
       }
       return {
         ID: id,

@@ -1,5 +1,6 @@
+const BaseException = require("./BaseException");
 
-class UnauthorizedException extends Error{
+class UnauthorizedException extends BaseException{
 
   statusCode;
 

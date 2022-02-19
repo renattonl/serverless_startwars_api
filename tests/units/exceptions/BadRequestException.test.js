@@ -2,7 +2,7 @@ const BadRequestException = require("../../../src/exceptions/BadRequestException
 
 describe("BadRequestException.js", () => {
 
-  test("su tipado debe ser function y su instancia de la clase Error", () => {
+  test("el tipado debe ser function y su instancia de la clase Error", () => {
     expect(typeof BadRequestException).toBe("function");
     expect(new BadRequestException()).toBeInstanceOf(Error);
   })

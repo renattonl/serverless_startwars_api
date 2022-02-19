@@ -4,8 +4,8 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs14.x
-  stage: ${env:STAGE, 'dev'}
-  region: ${env:AWS_REGION, 'us-east-1'}
+  stage: dev
+  region: ${env:AWS_REGION, 'us-east-2'}
   profile: ${env:AWS_PROFILE, 'default'}
 
 plugins:
@@ -21,15 +21,17 @@ functions:
       - httpApi:
           path: /vehiculo
           method: post
+          documentation: ${file(serverless.doc.yml):endpoints.crearVehiculo}
+          
   obtenerVehiculo:
     handler: src/handler.obtenerVehiculo
     events:
       - httpApi:
           path: /vehiculo/{id}
           method: get
+          documentation: ${file(serverless.doc.yml):endpoints.obtenerVehiculo}
 
 custom:
-  tableName: vehiculosTable
   dynamodb:
     stages:
       - dev
@@ -39,12 +41,13 @@ custom:
       migrate: true
     migration:
       dir: offline/migrations
-  # documentation: ${file(serverless.doc.yml):documentation}
+  documentation: ${file(serverless.doc.yml):documentation}
 
 resources:
   Resources:
-    vehiculosTable:
+    DynamoDBTable:
       Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
       Properties:
         TableName: vehiculosTable
         AttributeDefinitions:

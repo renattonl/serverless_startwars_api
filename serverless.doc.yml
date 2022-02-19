@@ -1,8 +1,145 @@
-version: '1.0.0',
-title: 'Api reto técnico - Indra'
-description: 'Esta api se ha desarrollado para obtener un modelo de vehiculo y para guardar un modelo vehiculo'
-models: 
-  - name: "Vehiculo"
-    description: "El modelo Vehiculo"
-    contentType: "application/json"
-    schema: 
+endpoints:
+  obtenerVehiculo:
+    summary: "Obtener el recurso vehiculo"
+    description: "Obtener un recurso vehiculo. Primero consulta a la BD y si no lo encuentra consulta con la API externa (Swapi)"
+    requestBody:
+      description: "Devuelve el recurso vehiculo en objeto"
+    requestModels:
+      application/json: "VehiculoResponse"
+    methodResponses:
+      - statusCode: 200
+        responseBody:
+          description: "El recurso vehiculo se ha recuperado correctamente"
+        responseModels:
+          application/json: "VehiculoResponse"
+      - statusCode: 404
+        responseBody:
+          description: "El recurso solicitado con el ID no existe"
+        responseModels:
+          application/json: "Error404Response"
+  crearVehiculo:
+    summary: "Crear un recurso vehiculo"
+    description: "Crear un recurso vehiculo y devolver el recurso en si."
+    requestBody:
+      description: "El registro creado del vehiculo"
+    requestModels:
+      application/json: "PostVehiculoRequest"
+    methodResponses:
+      - statusCode: 201
+        responseBody:
+          description: "El recurso vehiculo se ha creado correctamente"
+        responseModels:
+          application/json: "VehiculoResponse"
+      - statusCode: 500
+        responseBody:
+          description: "Ha ocurrido un problema en el servidor"
+        responseModels:
+          application/json: "ErrorResponse"
+documentation:
+  version: '1.0.0'
+  title: 'Serverles Api - aws - swapi'
+  description: 'Esta api se ha desarrollado para obtener un modelo de vehiculo y para guardar un modelo vehiculo'
+  models: 
+    - name: "Error404Response"
+      description: "Respuesta de error del servidor - 404"
+      contentType: "application/json"
+      schema:
+        $schema: "http://json-schema.org/draft-04/schema#"
+        properties:
+          message:
+            type: "string"
+    - name: "ErrorResponse"
+      description: "Respuesta de error del servidor - 500"
+      contentType: "application/json"
+      schema:
+        $schema: "http://json-schema.org/draft-04/schema#"
+        properties:
+          message:
+            type: "string"
+    - name: "PostVehiculoRequest"
+      description: "Los campos del body para crear el recurso vehiculo"
+      contentType: "application/json"
+      schema:
+        $schema: "http://json-schema.org/draft-04/schema#"
+        properties:
+          capacidad_cargo:
+            type: "string"
+          consumibles:
+            type: "string"
+          costo_en_creditos:
+            type: "string"
+          tripulacion:
+            type: "string"
+          largo:
+            type: "string"
+          fabricante:
+            type: "string"
+          valocidad_atmosferica_maxima:
+            type: "string"
+          modelo:
+            type: "string"
+          nombre:
+            type: "string"
+          pasajeros:
+            type: "string"
+          pilotos:
+            type: "array"
+            items:
+              type: "string"
+          peliculas:
+            type: "array"
+            items:
+              type: "string"
+          url:
+            type: "string"
+          clase_de_vehiculo:
+            type: "string"
+          creado:
+            type: "string"
+          editado:
+            type: "string"
+    - name: "VehiculoResponse"
+      description: "El modelo Vehiculo"
+      contentType: "application/json"
+      schema:
+        $schema: "http://json-schema.org/draft-04/schema#"
+        properties:
+          ID:
+            type: "string"
+          capacidad_cargo:
+            type: "string"
+          consumibles:
+            type: "string"
+          costo_en_creditos:
+            type: "string"
+          tripulacion:
+            type: "string"
+          largo:
+            type: "string"
+          fabricante:
+            type: "string"
+          valocidad_atmosferica_maxima:
+            type: "string"
+          modelo:
+            type: "string"
+          nombre:
+            type: "string"
+          pasajeros:
+            type: "string"
+          pilotos:
+            type: "array"
+            items:
+              type: "string"
+          peliculas:
+            type: "array"
+            items:
+              type: "string"
+          url:
+            type: "string"
+          clase_de_vehiculo:
+            type: "string"
+          creado:
+            type: "string"
+          editado:
+            type: "string"
+        

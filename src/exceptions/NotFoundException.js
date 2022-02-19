@@ -1,11 +1,11 @@
+const BaseException = require("./BaseException");
 
-class NotFoundException extends Error{
+class NotFoundException extends BaseException{
 
-  statusCode;
+  statusCode = 404;
 
   constructor(...args){
     super(...args);
-    this.statusCode = 404;
   }
 }
 

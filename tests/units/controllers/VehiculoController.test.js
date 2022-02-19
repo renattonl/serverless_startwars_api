@@ -1,4 +1,4 @@
-
+jest.mock("../../../src/controllers/VehiculoController");
 const VehiculoController = require("../../../src/controllers/VehiculoController");
 const BadRequestException = require("../../../src/exceptions/BadRequestException");
 const NotFoundException = require("../../../src/exceptions/NotFoundException");
@@ -32,22 +32,23 @@ describe("VehiculoController.js", () => {
   });
 
   test("el metodo crear debe de retornar ok", async () => {
-    try {
-      const res = await VehiculoController.crear({
-        body: JSON.stringify(dataTest)
-      });
-      expect(typeof res).toBe("object");
-      expect(res.statusCode).toBe(201);
-      expect(typeof res.body).toBe("string");
-      const row = JSON.parse(res.body);
-      expect(row.ID).toBeDefined();
-    } catch (error) {
-      console.log(error);
-    }
+    VehiculoController.crear.mockReturnValue(Promise.resolve({
+      statusCode: 201,
+      body: JSON.stringify({ID: Date.now().toString(),dataTest})
+    }));
+    const res = await VehiculoController.crear({
+      body: JSON.stringify(dataTest)
+    });
+    expect(typeof res).toBe("object");
+    expect(res.statusCode).toBe(201);
+    expect(typeof res.body).toBe("string");
+    const row = JSON.parse(res.body);
+    expect(row.ID).toBeDefined();
   });
 
   test("el metodo crear debe de retornar error", async () => {
     try {
+      VehiculoController.crear.mockReturnValue(Promise.reject(new BadRequestException()))
       await VehiculoController.crear({
         body: JSON.stringify({})
       });
@@ -58,24 +59,25 @@ describe("VehiculoController.js", () => {
   });
 
   test("el metodo obtener debe devolver ok", async () => {
-    try {
-      const res = await VehiculoController.obtener({
-        pathParameters: {id: 4}
-      });
-      expect(typeof res).toBe("object");
-      expect(res.statusCode).toBe(200);
-      expect(typeof res.body).toBe("string");
-      const row = JSON.parse(res.body);
-      expect(row.ID).toBeDefined();
-    } catch (error) {
-      console.log(error);
-    }
+    VehiculoController.obtener.mockReturnValue(Promise.resolve({
+      statusCode: 200,
+      body: JSON.stringify(dataTest)
+    }))
+    const res = await VehiculoController.obtener({
+      pathParameters: {id: dataTest.ID}
+    });
+    expect(typeof res).toBe("object");
+    expect(res.statusCode).toBe(200);
+    expect(typeof res.body).toBe("string");
+    const row = JSON.parse(res.body);
+    expect(row).toEqual(dataTest);
   });
 
   test("el metodo obtener debe devolver error", async () => {
     try {
+      VehiculoController.obtener.mockReturnValue(Promise.reject(new NotFoundException()))
       await VehiculoController.obtener({
-        pathParameters: {id: 'ABC123'}
+        pathParameters: {id: '1'}
       })
     } catch (error) {
       expect(error).toBeInstanceOf(NotFoundException);

@@ -6,6 +6,7 @@ const Swapi = require("../libs/Swapi");
 const Vehiculo = require("../models/Vehiculo");
 const NotFoundException = require("../exceptions/NotFoundException");
 const BadRequestException = require('../exceptions/BadRequestException');
+const ModelNotFoundException = require('../exceptions/ModelNotFoundException');
 
 class VehiculoService{
 
@@ -38,13 +39,17 @@ class VehiculoService{
       let row = null;
       try {
         row = await this.db.get(ID);
-      } catch (e) {
-        row = await Swapi.getVehicle(ID);
-        await this.crear(row);
+      } catch (error) {
+        if(error instanceof ModelNotFoundException){
+          row = await Swapi.getVehicle(ID);
+          await this.crear(row);
+        } else {
+          throw error;
+        }
       }
       return new Vehiculo(row);
     } catch (error) {
-      return Promise.reject( new NotFoundException(error.message) )
+      return Promise.reject(error);
     }
   }
 

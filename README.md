@@ -79,3 +79,15 @@ serverless invoke local --function obtenerVehiculo
     }
 }
 ```
+
+### Pruebas unitarias 
+```bash
+$ npm test
+```
+```bash
+Test Suites: 14 passed, 14 total
+Tests:       37 passed, 37 total
+Snapshots:   0 total
+Time:        2.263 s
+Ran all test suites.
+```
